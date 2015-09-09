@@ -68,9 +68,26 @@ class LoginView {
 		';
 	}
 	
+	public function isPosted()
+	{
+     
+		var_dump($_POST);
+		
+		if(isset($_POST[self::$name]) && !empty($_POST[self::$name]))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
+		
 	}
 	
 }
