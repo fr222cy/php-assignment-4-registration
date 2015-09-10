@@ -67,20 +67,28 @@ class LoginView {
 			</form>
 		';
 	}
-	
+	// If the user has typed in username and password.
 	public function isPosted()
 	{
-     
-		var_dump($_POST);
-		
-		if(isset($_POST[self::$name]) && !empty($_POST[self::$name]))
+     	var_dump($_POST);
+		if(isset($_POST[self::$name]) && !empty($_POST[self::$name])
+		&& isset($_POST[self::$password]) && !empty($_POST[self::$password]))
 		{
 			return true;
+			
 		}
 		else
 		{
 			return false;
 		}
+	}
+	public function getUsername()
+	{
+		return $_POST[self::$name];
+	}
+	public function getPassword()
+	{
+		return $_POST[self::$password];
 	}
 	
 	

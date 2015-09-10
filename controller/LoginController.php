@@ -8,14 +8,14 @@ class LoginController
 
     public function __construct(LoginView $v)
     {
-        
         $this->v = $v;
-        
-        
+    }
+    //init LoginController...
+    public function init()
+    {
         $this->isSomethingPosted();
-        
-        
-        
+        $this->username();
+        $this->password();
     }
     
     
@@ -23,25 +23,25 @@ class LoginController
     {
         if($this->v->isPosted())
         {
-            echo "Du har skrivit in ett användarnamn!";
+            echo "You have typed in your Username and the Password!";
             return true;
         }
         else
         {
-            echo "You need to type in an Username!";
+            echo "You have NOT typed in the Username or Password";
             return false;
         }
     }
-    
     public function username()
     {
-        
+        $username = $this->v->getUsername();
     }
-    
     public function password()
     {
-        
+        $password = $this->v->getPassword();
     }
+    
+
     
     
 }

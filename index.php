@@ -19,11 +19,7 @@ $lv = new LayoutView();
 
 
 $lc = new LoginController($v);
-
-
-
-
-
+$lc->init();
 
 $lv->render(false, $v, $dtv);
 
