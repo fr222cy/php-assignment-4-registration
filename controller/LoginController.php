@@ -5,42 +5,51 @@
 class LoginController
 {
     
-
-    public function __construct(LoginView $v)
+    public function __construct(LoginView $v, LoginModel $lm)
     {
         $this->v = $v;
+        $this->lm = $lm;
     }
-    //init LoginController...
+    
     public function init()
     {
         $this->isSomethingPosted();
-        $this->username();
-        $this->password();
     }
     
-    
+    //Checks if something is posted.
     public function isSomethingPosted()
     {
         if($this->v->isPosted())
         {
-            echo "You have typed in your Username and the Password!";
-            return true;
+            $username = $this->username();
+            $password = $this->password();
+            
+            echo "<br>LoginController POSTED:true";
+            $this->lm->checkLoginDetails($username, $password);
+        
+            
         }
         else
         {
-            echo "You have NOT typed in the Username or Password";
+            echo "<br>LoginController POSTED:false";
             return false;
         }
     }
+    //Gets the Username input.
     public function username()
     {
-        $username = $this->v->getUsername();
+        return $this->v->getUsername();
+
     }
+    //Gets the Password input.
     public function password()
     {
-        $password = $this->v->getPassword();
+        return $this->v->getPassword();
     }
     
+
+    
+   
 
     
     

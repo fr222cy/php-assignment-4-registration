@@ -10,7 +10,10 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	
+	public function __construct(LoginModel $lm)
+	{
+		$this->lm = $lm;
+	}
 
 	/**
 	 * Create HTTP response
@@ -20,7 +23,8 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$message = '';
+		
+		$message = $this->lm->response();
 		
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
@@ -70,12 +74,10 @@ class LoginView {
 	// If the user has typed in username and password.
 	public function isPosted()
 	{
-     	var_dump($_POST);
-		if(isset($_POST[self::$name]) && !empty($_POST[self::$name])
-		&& isset($_POST[self::$password]) && !empty($_POST[self::$password]))
+     
+		if(isset($_POST[self::$login]))
 		{
 			return true;
-			
 		}
 		else
 		{
