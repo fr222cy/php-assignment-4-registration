@@ -25,5 +25,5 @@ $lc = new LoginController($v,$lm);
 $lc->init();
 
 
-$lv->render(false, $v, $dtv);
+$lv->render($lm->loginStatus(), $v, $dtv);
 

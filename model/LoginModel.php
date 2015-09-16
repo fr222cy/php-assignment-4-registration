@@ -1,47 +1,79 @@
 <?php 
+session_start();
 
 class LoginModel
 {
 
-private $correctUN;
-private $correctPW;
 private $message;
 
-public function checkLoginDetails($username, $password)
+
+//CHECKLOGIN
+//Processes the logindetails that the user has typed in. 
+//Returns errormessage if it fails. sets "LOGINSTATUS" to true if succeed.
+
+public function __construct()
 {
-var_dump($username);
-var_dump($password);
+    if(!isset($_SESSION["loginStatus"]))
+    {
+    $_SESSION["loginStatus"] = false;     
+    }
+}
+
+public function checkLogin($username, $password)
+{
+
 $correctUN = "Admin";
-$correctPW = "password";
+$correctPW = "Password";
 $message = "";
-if($username == $correctUN && $password == $correctPW)
-{
-    $message = "Welcome!";
-}
 
-else if ($username == "")
-{
-    $message = "UserName is missing";
-}
-else if ($password == "")
-{
-    $message = "Password is missing";
-}
-
-else
-{
-    $message = "Wrong name or password";
-}
-   $this->message = $message; 
+    if($username == $correctUN && $password == $correctPW)
+    {
+        $_SESSION["loginStatus"] = true;
+        $message = "Welcome";
+    }
+    else if ($username == "")
+    {
+        //$message = "Username is missing";
+        throw new Exception("Username is missing");
+    }
+    else if ($password == "")
+    {
+        //$message = "Password is missing";
+        throw new Exception("Password is missing");
+    }
+    else
+    {
+        //$message = "Wrong name or password";
+        throw new Exception("Wrong name or password");
+    }
+ 
+  $this->message = $message; 
 }
     
-public function response()
+public function getSuccessMessage()
 {
     return $this->message;
 }
+
+public function userLogout()
+{
+    $this->message = "Bye bye!";
+    unset($_SESSION["loginStatus"]);
+    session_destroy();
+} 
+
+public function loginStatus()
+{
+    if(isset($_SESSION["loginStatus"]))
+    {
+      return $_SESSION["loginStatus"];  
+    }
     
-    
+} 
+
 }
+
+
 
 
 

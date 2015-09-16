@@ -9,42 +9,52 @@ class LoginController
     {
         $this->v = $v;
         $this->lm = $lm;
+
     }
     
     public function init()
     {
-        $this->isSomethingPosted();
+        $this->userPost();
+        $this->userWantsToLogout();
     }
     
     //Checks if something is posted.
-    public function isSomethingPosted()
+    public function userPost()
     {
         if($this->v->isPosted())
         {
             $username = $this->username();
             $password = $this->password();
-            
-            echo "<br>LoginController POSTED:true";
-            $this->lm->checkLoginDetails($username, $password);
-        
-            
-        }
-        else
-        {
-            echo "<br>LoginController POSTED:false";
-            return false;
+            try
+            {
+              $this->lm->checkLogin($username, $password);  
+            }
+            //
+            catch(Exception $e)
+            {
+                $this->v->statusMessage($e);
+            }
         }
     }
+    
     //Gets the Username input.
     public function username()
     {
         return $this->v->getUsername();
-
     }
+    
     //Gets the Password input.
     public function password()
     {
         return $this->v->getPassword();
+    }
+    
+    public function userWantsToLogout()
+    {
+        if($this->v->logout())
+        {
+            $this->lm->userLogout();
+        }
     }
     
 
