@@ -13,11 +13,7 @@ class LoginView {
 	
 	public function __construct(LoginModel $lm)
 	{
-		$this->lm = $lm;
-		$actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-		echo "HTTP_HOST = " . $_SERVER['HTTP_HOST']."<br>";
-		echo "PHP_SELF = " .$_SERVER['PHP_SELF'].'<br>';
-	
+	$this->lm = $lm;
 	}
 
 	/**
@@ -35,17 +31,19 @@ class LoginView {
 		
 		if($this->isPosted() || $this->logout())
 		{
-			$message = $this->message;	
+			$message = $this->message;
+		
 		}
-			
 		if($this->lm->loginStatus())
 		{
-	    	 $response .= $this->generateLogoutButtonHTML($message);	
+			
+			$response .= $this->generateLogoutButtonHTML($message);	
 		}
 		else
 		{
-    		 $response = $this->generateLoginFormHTML($message);
+			$response = $this->generateLoginFormHTML($message);
 		}
+		
 		return $response;
 	}
 

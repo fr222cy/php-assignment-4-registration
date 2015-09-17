@@ -4,68 +4,79 @@
 
 class LoginController
 {
-    
-    public function __construct(LoginView $v, LoginModel $lm)
-    {
-        $this->v = $v;
-        $this->lm = $lm;
+public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls)
+{
+    $this->v = $v;
+    $this->lm = $lm;
+    $this->ls = $ls;
+}
 
-    }
-    
-    public function init()
+public function init()
+{
+    $this->userPost();
+    $this->userWantsToLogout();
+}
+
+//Checks if something is posted.
+public function userPost()
+{
+    if($this->v->isPosted())
     {
-        $this->userPost();
-        $this->userWantsToLogout();
-    }
-    
-    //Checks if something is posted.
-    public function userPost()
-    {
-        if($this->v->isPosted())
+        $username = $this->username();
+        $password = $this->password();
+        
+        try
         {
-            $username = $this->username();
-            $password = $this->password();
-            try
+            $this->lm->checkLogin($username, $password);
+        
+            //If no Exception is thrown, the user has successfully logged in.
+            if($this->ls->loginMessage())
             {
-              $this->lm->checkLogin($username, $password);
-              //If no Exception is thrown, the user has successfully logged in.
-              $this->v->statusMessage("Welcome");
+                $this->v->statusMessage('Welcome');   
             }
-            //Throw Exception if the user fails to login.
-            catch(Exception $e)
+            else
             {
-                $this->v->statusMessage($e -> getMessage());
+                $this->v->statusMessage('');    
             }
+        }   
+        //Throw Exception if the user fails to login.
+        catch(Exception $e)
+        {
+            $this->v->statusMessage($e -> getMessage());
         }
     }
-    
-    //Gets the Username input.
-    public function username()
+}
+
+//Gets the Username input.
+public function username()
+{
+    return $this->v->getUsername();
+}
+
+//Gets the Password input.
+public function password()
+{
+    return $this->v->getPassword();
+}
+
+//Calls userLogout that destroys the 
+public function userWantsToLogout()
+{
+    if($this->v->logout())
     {
-        return $this->v->getUsername();
-    }
+        $this->lm->userLogout();
     
-    //Gets the Password input.
-    public function password()
-    {
-        return $this->v->getPassword();
-    }
-    
-    public function userWantsToLogout()
-    {
-        if($this->v->logout())
+        if(!$this->ls->loginMessage())
         {
-            $this->lm->userLogout();
             $this->v->statusMessage("Bye bye!");
         }
+        else
+        {
+            $this->v->statusMessage(''); 
+        }
     }
-    
+}
 
-    
-   
-
-    
-    
 }
 
 
