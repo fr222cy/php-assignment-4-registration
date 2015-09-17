@@ -27,12 +27,14 @@ class LoginController
             $password = $this->password();
             try
             {
-              $this->lm->checkLogin($username, $password);  
+              $this->lm->checkLogin($username, $password);
+              //If no Exception is thrown, the user has successfully logged in.
+              $this->v->statusMessage("Welcome");
             }
-            //
+            //Throw Exception if the user fails to login.
             catch(Exception $e)
             {
-                $this->v->statusMessage($e);
+                $this->v->statusMessage($e -> getMessage());
             }
         }
     }
@@ -54,6 +56,7 @@ class LoginController
         if($this->v->logout())
         {
             $this->lm->userLogout();
+            $this->v->statusMessage("Bye bye!");
         }
     }
     

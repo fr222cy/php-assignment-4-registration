@@ -29,7 +29,7 @@ $message = "";
     if($username == $correctUN && $password == $correctPW)
     {
         $_SESSION["loginStatus"] = true;
-        $message = "Welcome";
+      
     }
     else if ($username == "")
     {
@@ -47,17 +47,12 @@ $message = "";
         throw new Exception("Wrong name or password");
     }
  
-  $this->message = $message; 
 }
     
-public function getSuccessMessage()
-{
-    return $this->message;
-}
+
 
 public function userLogout()
 {
-    $this->message = "Bye bye!";
     unset($_SESSION["loginStatus"]);
     session_destroy();
 } 

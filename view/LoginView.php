@@ -14,6 +14,10 @@ class LoginView {
 	public function __construct(LoginModel $lm)
 	{
 		$this->lm = $lm;
+		$actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+		echo "HTTP_HOST = " . $_SERVER['HTTP_HOST']."<br>";
+		echo "PHP_SELF = " .$_SERVER['PHP_SELF'].'<br>';
+	
 	}
 
 	/**
@@ -28,17 +32,15 @@ class LoginView {
 		
 		$response = "";
 		$message = "";
-		//$message = $this->lm->response();
-		if($this->isPosted())
+		
+		if($this->isPosted() || $this->logout())
 		{
 			$message = $this->message;	
 		}
 			
-		
 		if($this->lm->loginStatus())
 		{
-			 $message = $this->lm->getSuccessMessage();
-			 $response .= $this->generateLogoutButtonHTML($message);	
+	    	 $response .= $this->generateLogoutButtonHTML($message);	
 		}
 		else
 		{
@@ -63,7 +65,7 @@ class LoginView {
 	//Gets statusmessage from exception.
 	public function statusMessage($e)
 	{
-		$this->message = $e -> getMessage();
+		$this->message = $e ;
 	}
 	public function logout()
 	{
