@@ -4,17 +4,22 @@
 
 class LoginController
 {
-public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls)
+public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, DateTimeView $dtv, LayoutView $lv)
 {
     $this->v = $v;
     $this->lm = $lm;
     $this->ls = $ls;
+    $this->dtv = $dtv;
+    $this->lv = $lv;
+    
 }
 
 public function init()
 {
     $this->userPost();
     $this->userWantsToLogout();
+    
+    $this->lv->render($this->lm->loginStatus(),false, $this->v, $this->dtv);
 }
 
 //Checks if something is posted.
