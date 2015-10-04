@@ -42,11 +42,11 @@ class LayoutView {
   {
     if(!$isRegisterPage)
     {
-      return '<a href=?register>Register here!</a> ';
+      return '<a href=?register>Register a new user</a> ';
     }
     else 
     {
-      return '<a href=?>Go back!</a>';
+      return '<a href=?>Back to login</a>';
     }
       
   }

@@ -4,6 +4,8 @@
 
 class LoginController
 {
+    
+    
 public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, DateTimeView $dtv, LayoutView $lv)
 {
     $this->v = $v;
@@ -11,7 +13,6 @@ public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, Date
     $this->ls = $ls;
     $this->dtv = $dtv;
     $this->lv = $lv;
-    
 }
 
 public function init()
@@ -53,13 +54,13 @@ public function userPost()
 }
 
 //Gets the Username input.
-public function username()
+private function username()
 {
     return $this->v->getUsername();
 }
 
 //Gets the Password input.
-public function password()
+private function password()
 {
     return $this->v->getPassword();
 }
