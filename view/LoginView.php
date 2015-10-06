@@ -73,6 +73,14 @@ class LoginView {
 		}
 	}
 	
+	public function setWelcomeMessage()
+	{
+		$this->statusMessage('Welcome');
+	}
+	public function setLogoutMessage()
+	{
+		$this->statusMessage('Bye bye!');
+	}
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message

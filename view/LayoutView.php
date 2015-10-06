@@ -40,14 +40,17 @@ class LayoutView {
   
    function renderIsRegistrating($isRegisterPage)
   {
-    if(!$isRegisterPage)
-    {
-      return '<a href=?register>Register a new user</a> ';
-    }
-    else 
-    {
-      return '<a href=?>Back to login</a>';
-    }
+   
+      if(!$isRegisterPage )
+      {
+        return '<a href=?register>Register a new user</a> ';
+      }
+      else 
+      {
+        return '<a href=?>Back to login</a>';
+      } 
+    
+
       
-  }
+ }
 }

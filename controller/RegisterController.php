@@ -3,12 +3,13 @@
 class RegisterController
 {
     
-    public function __construct(RegisterView $rv,RegisterModel $rm, DateTimeView $dtv, LayoutView $lv )
+    public function __construct(RegisterView $rv,RegisterModel $rm, DateTimeView $dtv, LayoutView $lv, RegisterDAL $rd )
     {
         $this->rv = $rv;
         $this->rm = $rm;
         $this->lv = $lv;
         $this->dtv = $dtv;
+        $this->rd = $rd;
     }
     
     public function init()
@@ -23,8 +24,20 @@ class RegisterController
         {
             $username = $this->newUsername();
             $password = $this->newPassword();
+            $passwordRepeat = $this->newPasswordRepeat();
             
-            $this->lm->checkRegisterCredentials($username, $password);
+            try
+            {
+               //Check if the credentials is correct, then return a user object.
+               $user = $this->rm->checkRegisterCredentials($username, $password, $passwordRepeat,$this-rd);  
+               //Adds the user to database.bin
+               $this->rd->AddUser($user);
+               
+            }
+            catch(Exception $e)
+            {
+                $this->rv->statusMessage($e -> getMessage());
+            }
             
         }
         
@@ -38,6 +51,11 @@ class RegisterController
     private function newPassword()
     {
         return $this->rv->getNewPassword();
+    }
+    
+    private function newPasswordRepeat()
+    {
+        return $this->rv->getPasswordRepeat();
     }
     
     //TODO: Get Repeated Password.

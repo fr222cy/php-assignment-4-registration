@@ -17,8 +17,22 @@ class RegisterView
     
     public function response()
     {
-        return $this->generateRegistrationFormHTML("");
+    	$message ="";
+    	
+    	if($this->hasPressedRegister())
+    	{
+    	$message = $this->messageToUser;
+    	}
+    	
+    	
+        return $this->generateRegistrationFormHTML($message);
     }
+    
+    public function statusMessage($e)
+	{
+		$this->messageToUser = $e ;
+	}
+
     
     private function generateRegistrationFormHTML($message)
     {
@@ -28,7 +42,8 @@ class RegisterView
          <form method="post" >
          <fieldset>
          <legend>Register a new user - Write username and password</legend>
-         <p id="'. self::$message .'"> '.$message.' </php> 
+         <p id="'. self::$message .'"> '.$message.' </php>
+         <br>
          <label for="' . self::$username . '">Username :</label>
 	   	 <input type="text" id="' . self::$username . '" name="' . self::$username . '" value="'. self::$storedName .'" /> 
 	   	 <br>
@@ -67,6 +82,11 @@ class RegisterView
 	public function getNewPassword()
 	{
 		return $_POST[self::$password];
+	}
+	
+	public function getPasswordRepeat()
+	{
+		return $_POST[self::$passwordRepeat];
 	}
     
 }

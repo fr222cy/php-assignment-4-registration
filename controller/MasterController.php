@@ -10,6 +10,8 @@ require_once('view/LayoutView.php');
 require_once('model/LoginModel.php');
 require_once('model/LoginSession.php');
 require_once('model/RegisterModel.php');
+require_once('model/RegisterDAL.php');
+require_once('model/User.php');
 class MasterController
 {
     public function init()
@@ -18,6 +20,7 @@ class MasterController
         $loginModel = new LoginModel();
         $loginSession = new LoginSession();
         $registerModel = new RegisterModel();
+        $registerDAL = new RegisterDAL();
         //CREATE OBJECTS OF THE VIEWS
         $loginView = new LoginView($loginModel);
         $registerView = new RegisterView();
@@ -25,7 +28,7 @@ class MasterController
         $layoutView = new LayoutView();
         //CREATE OBJECTS OF THE CONTROLLERS
         $loginController = new LoginController($loginView,$loginModel,$loginSession,$dateTimeView, $layoutView);
-        $registerController = new RegisterController($registerView,$registerModel,$dateTimeView, $layoutView);
+        $registerController = new RegisterController($registerView,$registerModel,$dateTimeView, $layoutView, $registerDAL );
         
         //Checks if the url ends with register or not.
         $uri = $_SERVER["REQUEST_URI"];

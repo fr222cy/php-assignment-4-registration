@@ -38,7 +38,7 @@ public function userPost()
             //If no Exception is thrown, the user has successfully logged in.
             if($this->ls->loginMessage())
             {
-                $this->v->statusMessage('Welcome');   
+                $this->v->setWelcomeMessage();   
             }
             else
             {
@@ -74,7 +74,7 @@ public function userWantsToLogout()
     
         if(!$this->ls->loginMessage())
         {
-            $this->v->statusMessage("Bye bye!");
+            $this->v->setLogoutMessage();
         }
         else
         {
