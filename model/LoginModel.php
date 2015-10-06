@@ -1,5 +1,5 @@
 <?php 
-session_start();
+
 
 class LoginModel
 {
@@ -9,7 +9,7 @@ private $message;
 
 
 
-public function __construct()
+public function __construct(RegisterDAL $rd)
 {
     if(!isset($_SESSION["loginStatus"]))
     {
@@ -21,7 +21,8 @@ public function __construct()
 //Returns errormessage if it fails. sets "LOGINSTATUS" to true if succeed.
 public function checkLogin($username, $password)
 {
-
+    //TODO: CHECK IF USERNAME OR PASSWORD IS CORRECT!
+    foreach($this->)
     $correctUN = "Admin";
     $correctPW = "Password";
     $message = "";

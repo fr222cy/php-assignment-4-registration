@@ -17,18 +17,18 @@ class MasterController
     public function init()
     {
         //CREATE OBJECT OF THE MODEL
-        $loginModel = new LoginModel();
+        $registerDAL = new RegisterDAL();
+        $loginModel = new LoginModel($registerDAL);
         $loginSession = new LoginSession();
         $registerModel = new RegisterModel();
-        $registerDAL = new RegisterDAL();
         //CREATE OBJECTS OF THE VIEWS
         $loginView = new LoginView($loginModel);
         $registerView = new RegisterView();
         $dateTimeView = new DateTimeView();
         $layoutView = new LayoutView();
         //CREATE OBJECTS OF THE CONTROLLERS
-        $loginController = new LoginController($loginView,$loginModel,$loginSession,$dateTimeView, $layoutView);
-        $registerController = new RegisterController($registerView,$registerModel,$dateTimeView, $layoutView, $registerDAL );
+        $loginController = new LoginController($loginView, $loginModel, $loginSession, $dateTimeView, $layoutView);
+        $registerController = new RegisterController($registerView, $registerModel, $dateTimeView, $layoutView, $registerDAL);
         
         //Checks if the url ends with register or not.
         $uri = $_SERVER["REQUEST_URI"];
@@ -44,9 +44,6 @@ class MasterController
         $loginController->init();
         }
         
-        
-        
-        //render PARAM-> (user logged in?, user in registry page?, loginview, datetime, registryview.)
         
     }
     

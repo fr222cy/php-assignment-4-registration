@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //INCLUDE THE FILES NEEDED...
 require_once('controller/MasterController.php');
 

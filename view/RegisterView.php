@@ -65,7 +65,11 @@ class RegisterView
 	    
 		if(isset($_POST[self::$register]))
 		{
+			if(strlen($_POST[self::$username]) >= 3)
+			{
 		    self::$storedName = $_POST[self::$username];
+			}
+			
 			return true;
 		}
 		else

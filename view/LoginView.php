@@ -10,6 +10,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	private static $storedName = '';
+	private $message;
 	
 	public function __construct(LoginModel $lm)
 	{
@@ -28,15 +29,12 @@ class LoginView {
 		
 		$response = "";
 		$message = "";
-		
-		if($this->isPosted() || $this->logout())
+		if ($this->message != null)
 		{
 			$message = $this->message;
-		
 		}
 		if($this->lm->loginStatus())
 		{
-			
 			$response .= $this->generateLogoutButtonHTML($message);	
 		}
 		else
@@ -80,6 +78,11 @@ class LoginView {
 	public function setLogoutMessage()
 	{
 		$this->statusMessage('Bye bye!');
+	}
+	public function setRegistered($username)
+	{
+		$this->statusMessage('Registered new user');
+		self::$storedName = $username;
 	}
 	/**
 	* Generate HTML code on the output buffer for the logout button

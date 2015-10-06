@@ -3,13 +3,14 @@
 class RegisterController
 {
     
-    public function __construct(RegisterView $rv,RegisterModel $rm, DateTimeView $dtv, LayoutView $lv, RegisterDAL $rd )
+    public function __construct(RegisterView $rv,RegisterModel $rm, DateTimeView $dtv, LayoutView $lv, RegisterDAL $rd)
     {
         $this->rv = $rv;
         $this->rm = $rm;
         $this->lv = $lv;
         $this->dtv = $dtv;
         $this->rd = $rd;
+       
     }
     
     public function init()
@@ -29,10 +30,12 @@ class RegisterController
             try
             {
                //Check if the credentials is correct, then return a user object.
-               $user = $this->rm->checkRegisterCredentials($username, $password, $passwordRepeat,$this-rd);  
+               $user = $this->rm->checkRegisterCredentials($username, $password, $passwordRepeat,$this->rd);  
+               $this->rd->AddUser($user); 
                //Adds the user to database.bin
-               $this->rd->AddUser($user);
-               
+           
+               $_SESSION['Username'] = $username;
+               header('Location:?');
             }
             catch(Exception $e)
             {
@@ -58,6 +61,6 @@ class RegisterController
         return $this->rv->getPasswordRepeat();
     }
     
-    //TODO: Get Repeated Password.
+   
     
 }

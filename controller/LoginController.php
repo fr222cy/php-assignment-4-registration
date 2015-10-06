@@ -13,12 +13,21 @@ public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, Date
     $this->ls = $ls;
     $this->dtv = $dtv;
     $this->lv = $lv;
+    
 }
 
 public function init()
 {
     $this->userPost();
     $this->userWantsToLogout();
+    
+    //If a registration has happend, print it in the view and set the name of user in the inputbox.
+    if(isset($_SESSION['Username']))
+    {
+        $username = $_SESSION['Username'];
+        $this->v->setRegistered($username);
+        unset($_SESSION['Username']);
+    }
     
     $this->lv->render($this->lm->loginStatus(),false, $this->v, $this->dtv);
 }
@@ -82,6 +91,8 @@ public function userWantsToLogout()
         }
     }
 }
+
+
 
 }
 
