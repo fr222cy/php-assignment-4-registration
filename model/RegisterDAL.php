@@ -14,14 +14,14 @@ class RegisterDAL
     
     public function AddUser($user)
     {
-        $this->user = $user;
         $this->users = $this->getUsers();
+        
         if(!$this->users)
         {
             $this->users = array();
         }
         
-        array_push($this->users,$this->user);
+        array_push($this->users,$user);
         $serialized = serialize($this->users);
         
         file_put_contents($this->binFile,$serialized);
@@ -29,7 +29,6 @@ class RegisterDAL
     
     public function getUsers()
     {
-        $binFile = 'data/database.bin';
         return unserialize(file_get_contents($this->binFile));
     }
 

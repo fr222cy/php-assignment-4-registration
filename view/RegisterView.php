@@ -2,18 +2,15 @@
 
 
 class RegisterView
-{
+{								
     private static $username = 'RegisterView::UserName';
     private static $password = 'RegisterView::Password';
     private static $passwordRepeat = 'RegisterView::PasswordRepeat';
     private static $register = 'RegisterView::Register';
     private static $message  = 'RegisterView::Message';
     private static $storedName = '';
+    private static $messageToUser;
     
-    public function __construct()
-    {
-        
-    }
     
     public function response()
     {
@@ -21,7 +18,7 @@ class RegisterView
     	
     	if($this->hasPressedRegister())
     	{
-    	$message = $this->messageToUser;
+    	$message = self::$messageToUser;
     	}
     	
     	
@@ -30,7 +27,7 @@ class RegisterView
     
     public function statusMessage($e)
 	{
-		$this->messageToUser = $e ;
+		self::$messageToUser = $e ;
 	}
 
     
@@ -42,7 +39,7 @@ class RegisterView
          <form method="post" >
          <fieldset>
          <legend>Register a new user - Write username and password</legend>
-         <p id="'. self::$message .'"> '.$message.' </php>
+         <p id="'. self::$message .'"> '.$message.' </p>
          <br>
          <label for="' . self::$username . '">Username :</label>
 	   	 <input type="text" id="' . self::$username . '" name="' . self::$username . '" value="'. self::$storedName .'" /> 
@@ -65,11 +62,13 @@ class RegisterView
 	    
 		if(isset($_POST[self::$register]))
 		{
-			if(strlen($_POST[self::$username]) >= 3)
-			{
-		    self::$storedName = $_POST[self::$username];
-			}
+			self::$storedName = $_POST[self::$username];
 			
+			//Checks if username length is greater than 3, and that there is no invalid characters in the username string.
+	    	if(preg_match('#(?<=<)\w+(?=[^<]*?>)#', $_POST[self::$username]))
+	    	{
+	    		self::$storedName =  strip_tags($_POST[self::$username]) ;
+	    	}
 			return true;
 		}
 		else

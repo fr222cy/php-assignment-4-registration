@@ -29,7 +29,7 @@ class LoginView {
 		
 		$response = "";
 		$message = "";
-		if ($this->message != null)
+		if($this->message != null)
 		{
 			$message = $this->message;
 		}
@@ -44,7 +44,7 @@ class LoginView {
 		
 		return $response;
 	}
-
+	
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message

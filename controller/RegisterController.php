@@ -35,7 +35,8 @@ class RegisterController
                //Adds the user to database.bin
            
                $_SESSION['Username'] = $username;
-               header('Location:?');
+               $link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+               header("Location:$link");
             }
             catch(Exception $e)
             {

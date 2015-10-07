@@ -6,14 +6,14 @@ class LoginController
 {
     
     
-public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, DateTimeView $dtv, LayoutView $lv)
+public function __construct(LoginView $v, LoginModel $lm, LoginSession $ls, DateTimeView $dtv, LayoutView $lv , RegisterDAL $rd)
 {
     $this->v = $v;
     $this->lm = $lm;
     $this->ls = $ls;
     $this->dtv = $dtv;
     $this->lv = $lv;
-    
+    $this->rd = $rd;
 }
 
 public function init()
@@ -42,7 +42,7 @@ public function userPost()
         
         try
         {
-            $this->lm->checkLogin($username, $password);
+            $this->lm->checkLogin($username, $password, $this->rd);
         
             //If no Exception is thrown, the user has successfully logged in.
             if($this->ls->loginMessage())

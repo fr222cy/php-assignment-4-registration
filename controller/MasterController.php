@@ -18,7 +18,7 @@ class MasterController
     {
         //CREATE OBJECT OF THE MODEL
         $registerDAL = new RegisterDAL();
-        $loginModel = new LoginModel($registerDAL);
+        $loginModel = new LoginModel();
         $loginSession = new LoginSession();
         $registerModel = new RegisterModel();
         //CREATE OBJECTS OF THE VIEWS
@@ -27,21 +27,17 @@ class MasterController
         $dateTimeView = new DateTimeView();
         $layoutView = new LayoutView();
         //CREATE OBJECTS OF THE CONTROLLERS
-        $loginController = new LoginController($loginView, $loginModel, $loginSession, $dateTimeView, $layoutView);
+        $loginController = new LoginController($loginView, $loginModel, $loginSession, $dateTimeView, $layoutView, $registerDAL);
         $registerController = new RegisterController($registerView, $registerModel, $dateTimeView, $layoutView, $registerDAL);
         
         //Checks if the url ends with register or not.
-        $uri = $_SERVER["REQUEST_URI"];
-        
-        $uri = explode("?",$uri);
-        
-        if (count($uri) > 1 && $uri[1] == "register")
+        if(isset($_GET['register']))
         {
-        $registerController->init();
+            $registerController->init();   
         }
         else
         {
-        $loginController->init();
+            $loginController->init();
         }
         
         

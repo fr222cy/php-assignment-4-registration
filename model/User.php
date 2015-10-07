@@ -9,6 +9,8 @@ class User
     public function __construct($username, $password)
     {
         $this->username = $username;
+        //hash the password.
+        $password = hash('sha1', $password);
         $this->password = $password;
     }
     
@@ -18,6 +20,7 @@ class User
     }
     public function getPassword()
     {
+        
         return $this->password;
     }
 }
